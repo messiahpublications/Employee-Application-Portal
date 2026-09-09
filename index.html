@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Apply for technology opportunities at MRICON Solutions Pvt. Ltd.">
+  <meta name="theme-color" content="#171361">
+  <title>Careers | MRICON Solutions Pvt. Ltd.</title>
+  <style>
+    :root {
+      --navy: #171361;
+      --navy-light: #2d278c;
+      --orange: #f5a12b;
+      --gold: #b99a4d;
+      --ink: #191b2a;
+      --muted: #667085;
+      --line: #dfe3ec;
+      --surface: #fff;
+      --background: #f3f5fa;
+      --danger: #b42318;
+      --success: #087443;
+      --radius: 20px;
+      --shadow: 0 18px 48px rgba(23, 19, 97, .12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 92% 2%, rgba(245, 161, 43, .14), transparent 24rem),
+        linear-gradient(180deg, #fafbff, var(--background));
+      font: 16px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    button, input, select, textarea { font: inherit; }
+    a { color: inherit; }
+    .top-line { height: 7px; background: linear-gradient(90deg, var(--orange), var(--gold), var(--navy)); }
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 28px auto 48px; }
+
+    .header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+    .brand { display: flex; align-items: center; gap: 15px; }
+    .brand-mark {
+      width: 62px; height: 62px; display: grid; place-items: center;
+      color: #fff; background: linear-gradient(145deg, var(--orange), #e78c16);
+      border-radius: 17px 17px 17px 5px; box-shadow: 0 10px 24px rgba(245, 161, 43, .28);
+      font-size: 25px; font-weight: 900; letter-spacing: -.08em;
+    }
+    .brand h1 { margin: 0; color: var(--navy); font-size: clamp(1.15rem, 2.3vw, 1.65rem); line-height: 1.1; }
+    .brand p { margin: 5px 0 0; color: var(--muted); font-size: .88rem; }
+    .contact-shortcut {
+      display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 9px 16px;
+      color: var(--navy); background: rgba(255,255,255,.82); border: 1px solid var(--line);
+      border-radius: 999px; text-decoration: none; font-weight: 750;
+    }
+    .contact-shortcut:hover { border-color: var(--orange); }
+
+    .hero {
+      position: relative; overflow: hidden; padding: clamp(26px, 5vw, 48px);
+      color: #fff; background: linear-gradient(125deg, var(--navy), var(--navy-light));
+      border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 24px;
+    }
+    .hero::after {
+      content: ""; position: absolute; width: 245px; height: 245px; right: -70px; top: -105px;
+      border: 36px solid rgba(245,161,43,.22); border-radius: 50%;
+    }
+    .eyebrow { position: relative; z-index: 1; margin: 0 0 8px; color: #ffd99d; font-size: .78rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+    .hero h2 { position: relative; z-index: 1; max-width: 760px; margin: 0; font-size: clamp(1.85rem, 4.4vw, 3.2rem); line-height: 1.08; }
+    .hero-copy { position: relative; z-index: 1; max-width: 710px; margin: 14px 0 0; color: #e5e4ff; }
+    .hero-tags { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .hero-tags span { padding: 6px 10px; background: rgba(255,255,255,.11); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; font-size: .76rem; }
+
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; align-items: start; gap: 24px; }
+    .form-card, .contact-card { background: var(--surface); border: 1px solid rgba(223,227,236,.95); box-shadow: var(--shadow); }
+    .form-card { overflow: hidden; border-radius: var(--radius); }
+    .form-top { padding: 22px clamp(20px, 4vw, 34px); border-bottom: 1px solid var(--line); }
+    .progress-copy { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .9rem; }
+    .progress-copy strong { color: var(--navy); }
+    .progress-track { height: 7px; overflow: hidden; margin-top: 12px; background: #eceef5; border-radius: 999px; }
+    .progress-bar { width: 25%; height: 100%; background: linear-gradient(90deg, var(--orange), #ffc668); border-radius: inherit; transition: width .25s ease; }
+
+    .form-step { display: none; padding: 28px clamp(20px, 4vw, 34px) 34px; }
+    .form-step.active { display: block; animation: reveal .2s ease; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+    .step-title { margin: 0; color: var(--navy); font-size: 1.4rem; }
+    .step-help { margin: 5px 0 24px; color: var(--muted); font-size: .92rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .field.full { grid-column: 1 / -1; }
+    label { display: inline-block; margin-bottom: 7px; color: #303247; font-size: .9rem; font-weight: 720; }
+    .required { color: var(--danger); }
+    input, select, textarea {
+      width: 100%; min-height: 48px; padding: 11px 13px; color: var(--ink); background: #fff;
+      border: 1px solid #cfd4df; border-radius: 10px; outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    textarea { min-height: 108px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: var(--navy-light); box-shadow: 0 0 0 4px rgba(45,39,140,.1); }
+    input.invalid, select.invalid, textarea.invalid { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(180,35,24,.08); }
+    .hint { display: block; margin-top: 5px; color: var(--muted); font-size: .78rem; }
+    .error { display: none; margin-top: 5px; color: var(--danger); font-size: .8rem; }
+    .invalid ~ .error { display: block; }
+    .choice-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .choice {
+      display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 13px;
+      background: #f8f9fc; border: 1px solid var(--line); border-radius: 10px;
+    }
+    .choice input { width: 18px; min-height: 18px; margin: 0; accent-color: var(--navy); }
+    .choice label { margin: 0; font-weight: 600; }
+    .check-row { display: flex; align-items: flex-start; gap: 10px; padding: 14px; background: #f7f8fc; border-radius: 11px; }
+    .check-row input { width: 19px; min-height: 19px; margin: 2px 0 0; accent-color: var(--navy); }
+    .check-row label { margin: 0; font-weight: 600; }
+
+    .upload-box {
+      padding: 19px; background: #fafbfe; border: 1px dashed #aeb5c5; border-radius: 13px;
+    }
+    .upload-box:focus-within { border-color: var(--navy); box-shadow: 0 0 0 4px rgba(45,39,140,.08); }
+    .upload-box label { color: var(--navy); }
+    .upload-box input { min-height: auto; padding: 8px 0 0; border: 0; background: transparent; box-shadow: none; font-size: .86rem; }
+    .file-status { min-height: 19px; margin: 7px 0 0; color: var(--muted); font-size: .78rem; }
+    .file-status.ready { color: var(--success); font-weight: 750; }
+    .declaration { margin-top: 22px; padding: 18px; background: #fffbf4; border: 1px solid #f4d7a2; border-radius: 13px; }
+    .declaration > p { margin: 0 0 14px; color: #574528; font-size: .87rem; }
+    .privacy-note { margin: 14px 0 0; color: var(--muted); font-size: .78rem; }
+
+    .actions { display: flex; justify-content: space-between; gap: 12px; padding: 20px clamp(20px, 4vw, 34px); background: #f6f7fb; border-top: 1px solid var(--line); }
+    .btn {
+      min-height: 48px; padding: 11px 22px; border: 0; border-radius: 10px; cursor: pointer;
+      font-weight: 800; transition: transform .12s, opacity .12s, box-shadow .12s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { cursor: wait; opacity: .65; transform: none; }
+    .btn-back { color: var(--navy); background: #fff; border: 1px solid #cfd4df; }
+    .btn-next { color: #fff; background: linear-gradient(135deg, var(--navy), var(--navy-light)); box-shadow: 0 8px 18px rgba(23,19,97,.2); }
+    .btn-submit { color: #2c210d; background: linear-gradient(135deg, var(--orange), #ffc464); box-shadow: 0 8px 18px rgba(245,161,43,.25); }
+
+    .contact-card { position: sticky; top: 18px; overflow: hidden; border-radius: var(--radius); }
+    .contact-accent { height: 7px; background: linear-gradient(90deg, var(--orange), var(--gold)); }
+    .contact-body { padding: 24px; }
+    .contact-kicker { margin: 0; color: var(--orange); font-size: .75rem; font-weight: 850; letter-spacing: .11em; text-transform: uppercase; }
+    .contact-card h3 { margin: 5px 0 8px; color: var(--navy); font-size: 1.35rem; }
+    .contact-intro { margin: 0 0 20px; color: var(--muted); font-size: .88rem; }
+    .contact-list { display: grid; gap: 15px; }
+    .contact-item { display: grid; grid-template-columns: 34px 1fr; gap: 11px; }
+    .contact-icon { width: 34px; height: 34px; display: grid; place-items: center; color: var(--navy); background: #f0f0fa; border-radius: 9px; font-size: .86rem; font-weight: 850; }
+    .contact-label { display: block; color: var(--muted); font-size: .7rem; font-weight: 750; text-transform: uppercase; }
+    .contact-value { color: var(--ink); font-size: .87rem; text-decoration: none; overflow-wrap: anywhere; }
+    a.contact-value:hover { color: var(--navy); text-decoration: underline; }
+    .services { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .services strong { color: var(--navy); font-size: .83rem; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+    .service-tags span { padding: 5px 9px; color: #4b4d60; background: #f3f4f8; border-radius: 999px; font-size: .71rem; }
+    .director { margin-top: 20px; padding: 14px; color: #fff; background: linear-gradient(135deg, var(--navy), var(--navy-light)); border-radius: 12px; }
+    .director small { color: #cbc9f5; }
+    .director strong { display: block; margin-top: 2px; }
+    .toast {
+      position: fixed; z-index: 20; left: 50%; bottom: 24px; width: min(460px, calc(100% - 32px));
+      padding: 14px 16px; color: #fff; background: #272936; border-radius: 11px;
+      box-shadow: 0 16px 38px rgba(0,0,0,.24); transform: translate(-50%, 130%); opacity: 0;
+      transition: .25s ease; font-size: .9rem;
+    }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+    .toast.error-toast { background: #8f1c14; }
+    footer { padding: 23px 0 0; text-align: center; color: var(--muted); font-size: .78rem; }
+
+    @media (max-width: 880px) {
+      .layout { grid-template-columns: 1fr; }
+      .contact-card { position: static; }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 20px, 1180px); margin-top: 18px; }
+      .header { align-items: flex-start; }
+      .brand-mark { width: 52px; height: 52px; border-radius: 14px 14px 14px 4px; font-size: 22px; }
+      .brand p, .contact-shortcut span { display: none; }
+      .contact-shortcut { width: 44px; padding: 0; justify-content: center; }
+      .hero { padding: 25px 20px; }
+      .grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .actions { position: sticky; z-index: 5; bottom: 0; }
+      .btn { flex: 1; padding-inline: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-line"></div>
+  <main class="shell">
+    <header class="header">
+      <div class="brand" aria-label="MRICON Solutions Private Limited">
+        <div class="brand-mark" aria-hidden="true">mr</div>
+        <div>
+          <h1>MRICON Solutions Pvt. Ltd.</h1>
+          <p>Facility Services · Outsourcing · Staffing · HR Consulting</p>
+        </div>
+      </div>
+      <a class="contact-shortcut" href="#contact"><span>Applicant help</span> ☎</a>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">Build your next chapter</p>
+      <h2 id="page-title">Technology careers at MRICON</h2>
+      <p class="hero-copy">Tell us about your experience, strengths and ambitions. Our recruitment team will review your application and contact shortlisted candidates.</p>
+      <div class="hero-tags"><span>Software Engineering</span><span>Data &amp; AI</span><span>Cloud &amp; DevOps</span><span>Quality Engineering</span><span>Product &amp; Design</span></div>
+    </section>
+
+    <div class="layout">
+      <section class="form-card" aria-label="Job application form">
+        <div class="form-top">
+          <div class="progress-copy"><strong id="stepLabel">Step 1 of 4</strong><span id="stepName">About you</span></div>
+          <div class="progress-track" role="progressbar" aria-label="Application progress" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1"><div class="progress-bar" id="progressBar"></div></div>
+        </div>
+
+        <form id="applicationForm" novalidate>
+          <section class="form-step active" data-name="About you">
+            <h3 class="step-title">About you</h3>
+            <p class="step-help">Start with your contact details and the opportunity you are interested in.</p>
+            <div class="grid">
+              <div class="field full">
+                <label for="fullName">Full name <span class="required">*</span></label>
+                <input id="fullName" name="fullName" type="text" autocomplete="name" maxlength="100" required>
+                <span class="error">Please enter your full name.</span>
+              </div>
+              <div class="field">
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" autocomplete="email" maxlength="120" placeholder="Optional">
+                <span class="error">Please enter a valid email address.</span>
+              </div>
+              <div class="field">
+                <label for="mobile">Mobile number <span class="required">*</span></label>
+                <input id="mobile" name="mobile" type="tel" inputmode="numeric" autocomplete="tel" maxlength="10" pattern="[6-9][0-9]{9}" placeholder="10-digit Indian mobile number" required>
+                <span class="error">Enter a valid 10-digit Indian mobile number.</span>
+              </div>
+              <div class="field">
+                <label for="location">Current location <span class="required">*</span></label>
+                <input id="location" name="location" type="text" autocomplete="address-level2" maxlength="100" placeholder="City, State" required>
+                <span class="error">Please enter your current location.</span>
+              </div>
+              <div class="field">
+                <label for="role">Role applying for <span class="required">*</span></label>
+                <select id="role" name="role" required>
+                  <option value="">Select a role</option>
+                  <option>Software Developer / Engineer</option>
+                  <option>Frontend Developer</option>
+                  <option>Backend Developer</option>
+                  <option>Full Stack Developer</option>
+                  <option>Mobile App Developer</option>
+                  <option>Data Analyst / Data Scientist</option>
+                  <option>AI / Machine Learning Engineer</option>
+                  <option>Cloud / DevOps Engineer</option>
+                  <option>QA / Test Engineer</option>
+                  <option>UI / UX Designer</option>
+                  <option>Business Analyst</option>
+                  <option>Project / Product Manager</option>
+                  <option>IT Support / System Administrator</option>
+                  <option>Other Technology Role</option>
+                </select>
+                <span class="error">Please select a role.</span>
+              </div>
+              <div class="field full">
+                <label for="source">How did you hear about this opportunity? <span class="required">*</span></label>
+                <select id="source" name="source" required>
+                  <option value="">Select source</option>
+                  <option>LinkedIn</option><option>Naukri</option><option>Indeed</option><option>Employee referral</option><option>College / Campus</option><option>Company website</option><option>Recruitment agency</option><option>Other</option>
+                </select>
+                <span class="error">Please select an option.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-step" data-name="Professional profile">
+            <h3 class="step-title">Professional profile</h3>
+            <p class="step-help">Help our recruiters understand your experience and technical strengths.</p>
+            <div class="grid">
+              <div class="field">
+                <label for="experience">Total experience <span class="required">*</span></label>
+                <select id="experience" name="experience" required>
+                  <option value="">Select experience</option>
+                  <option>Fresher</option><option>Less than 1 year</option><option>1–2 years</option><option>2–4 years</option><option>4–7 years</option><option>7–10 years</option><option>10+ years</option>
+                </select>
+                <span class="error">Please select your experience.</span>
+              </div>
+              <div class="field">
+                <label for="currentCompany">Current / most recent company</label>
+                <input id="currentCompany" name="currentCompany" type="text" maxlength="120" placeholder="Write Fresher if not applicable">
+              </div>
+              <div class="field full">
+                <label for="skills">Primary technical skills <span class="required">*</span></label>
+                <textarea id="skills" name="skills" maxlength="600" placeholder="Example: Java, Spring Boot, React, PostgreSQL, AWS, Docker" required></textarea>
+                <span class="hint">List the technologies and tools you can confidently work with.</span>
+                <span class="error">Please enter your primary skills.</span>
+              </div>
+              <div class="field">
+                <label for="qualification">Highest qualification <span class="required">*</span></label>
+                <input id="qualification" name="qualification" type="text" maxlength="120" placeholder="Example: B.Tech Computer Science" required>
+                <span class="error">Please enter your qualification.</span>
+              </div>
+              <div class="field">
+                <label for="graduationYear">Graduation year <span class="required">*</span></label>
+                <input id="graduationYear" name="graduationYear" type="number" inputmode="numeric" min="1980" max="2035" placeholder="YYYY" required>
+                <span class="error">Enter a valid graduation year.</span>
+              </div>
+              <div class="field">
+                <label for="linkedin">LinkedIn profile</label>
+                <input id="linkedin" name="linkedin" type="url" inputmode="url" placeholder="https://linkedin.com/in/yourname">
+                <span class="error">Enter a complete URL beginning with http:// or https://.</span>
+              </div>
+              <div class="field">
+                <label for="portfolio">GitHub / portfolio link</label>
+                <input id="portfolio" name="portfolio" type="url" inputmode="url" placeholder="https://github.com/yourname">
+                <span class="error">Enter a complete URL beginning with http:// or https://.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-step" data-name="Availability">
+            <h3 class="step-title">Availability and preferences</h3>
+            <p class="step-help">Share practical details that help us evaluate the right opportunity for you.</p>
+            <div class="grid">
+              <div class="field">
+                <label for="noticePeriod">Notice period <span class="required">*</span></label>
+                <select id="noticePeriod" name="noticePeriod" required>
+                  <option value="">Select notice period</option>
+                  <option>Immediate</option><option>15 days</option><option>30 days</option><option>45 days</option><option>60 days</option><option>90 days</option><option>Currently serving notice</option>
+                </select>
+                <span class="error">Please select your notice period.</span>
+              </div>
+              <div class="field">
+                <label for="availableFrom">Available to join from <span class="required">*</span></label>
+                <input id="availableFrom" name="availableFrom" type="date" required>
+                <span class="error">Please choose an expected joining date.</span>
+              </div>
+              <div class="field">
+                <label for="currentCtc">Current annual CTC (₹ lakh)</label>
+                <input id="currentCtc" name="currentCtc" type="number" inputmode="decimal" min="0" max="999" step=".01" placeholder="Example: 6.50">
+              </div>
+              <div class="field">
+                <label for="expectedCtc">Expected annual CTC (₹ lakh) <span class="required">*</span></label>
+                <input id="expectedCtc" name="expectedCtc" type="number" inputmode="decimal" min="0" max="999" step=".01" required>
+                <span class="error">Please enter your expected CTC.</span>
+              </div>
+              <div class="field full">
+                <label>Preferred work arrangement <span class="required">*</span></label>
+                <div class="choice-group" id="workModeGroup">
+                  <div class="choice"><input id="onsite" name="workMode" type="radio" value="On-site" required><label for="onsite">On-site</label></div>
+                  <div class="choice"><input id="hybrid" name="workMode" type="radio" value="Hybrid"><label for="hybrid">Hybrid</label></div>
+                  <div class="choice"><input id="remote" name="workMode" type="radio" value="Remote"><label for="remote">Remote</label></div>
+                  <div class="choice"><input id="flexible" name="workMode" type="radio" value="Flexible"><label for="flexible">Flexible</label></div>
+                </div>
+                <span class="error" id="workModeError">Please select a work arrangement.</span>
+              </div>
+              <div class="field full">
+                <label for="relocation">Are you open to relocating to Hyderabad? <span class="required">*</span></label>
+                <select id="relocation" name="relocation" required>
+                  <option value="">Select an option</option><option>Yes</option><option>No</option><option>Already based in Hyderabad</option><option>Open to discussion</option>
+                </select>
+                <span class="error">Please select an option.</span>
+              </div>
+              <div class="field full">
+                <label for="additionalInfo">Additional information</label>
+                <textarea id="additionalInfo" name="additionalInfo" maxlength="800" placeholder="Certifications, awards, career break context, accessibility requirements, or anything else you would like us to know."></textarea>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-step" data-name="Resume and consent">
+            <h3 class="step-title">Resume and consent</h3>
+            <p class="step-help">Review your information and upload your latest resume before submitting.</p>
+            <div class="grid">
+              <div class="field full">
+                <div class="upload-box">
+                  <label for="resume">Latest resume <span class="required">*</span></label>
+                  <input id="resume" name="resume" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+                  <span class="hint">PDF, DOC or DOCX · Maximum 5 MB</span>
+                  <p class="file-status" id="resumeStatus" aria-live="polite">No file selected</p>
+                  <span class="error">Please upload your latest resume.</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="photo">Professional photograph <span class="required">*</span></label>
+                <div class="upload-box">
+                  <input id="photo" name="photo" type="file" accept="image/jpeg,image/png" required>
+                  <span class="hint">Required · JPG or PNG · Maximum 2 MB</span>
+                  <p class="file-status" id="photoStatus" aria-live="polite">No file selected</p>
+                  <span class="error">Please upload a professional photograph under 2 MB.</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="coverNote">Short note to the hiring team</label>
+                <textarea id="coverNote" name="coverNote" maxlength="800" placeholder="Why are you interested in this role?"></textarea>
+              </div>
+            </div>
+            <div class="declaration">
+              <p>I confirm that the information in this application is accurate. I understand that MRICON Solutions may verify relevant employment and education details during the recruitment process.</p>
+              <div class="check-row">
+                <input id="consent" name="consent" type="checkbox" value="Yes" required>
+                <label for="consent">I consent to MRICON Solutions Pvt. Ltd. processing my application information for recruitment and contacting me about suitable opportunities. <span class="required">*</span></label>
+              </div>
+              <p class="privacy-note">Identity, family and banking documents are intentionally not requested at this stage. Shortlisted candidates may be asked for necessary verification documents through an authorized onboarding process.</p>
+            </div>
+          </section>
+
+          <div class="actions">
+            <button class="btn btn-back" id="backBtn" type="button" hidden>Back</button>
+            <button class="btn btn-next" id="nextBtn" type="button">Save &amp; continue</button>
+            <button class="btn btn-submit" id="submitBtn" type="submit" hidden>Submit application</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="contact-card" id="contact" aria-labelledby="contact-title">
+        <div class="contact-accent"></div>
+        <div class="contact-body">
+          <p class="contact-kicker">Applicant support</p>
+          <h3 id="contact-title">Need help?</h3>
+          <p class="contact-intro">Contact our team if you need assistance with your application.</p>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-icon" aria-hidden="true">☎</span><div><span class="contact-label">Call</span><a class="contact-value" href="tel:+919492607213">+91 94926 07213</a></div></div>
+            <div class="contact-item"><span class="contact-icon" aria-hidden="true">@</span><div><span class="contact-label">Email</span><a class="contact-value" href="mailto:info@mriconsolutions.com">info@mriconsolutions.com</a></div></div>
+            <div class="contact-item"><span class="contact-icon" aria-hidden="true">⌂</span><div><span class="contact-label">Office</span><span class="contact-value">H.No. 5-3-73/1&amp;2, Ground Floor, Manasa Towers, Opp. Sivalayam Temple, Kukatpally, Hyderabad, Telangana</span></div></div>
+          </div>
+          <div class="services"><strong>Services offered</strong><div class="service-tags"><span>Facility Services</span><span>Outsourcing</span><span>Staffing</span><span>HR Consulting</span></div></div>
+          <div class="director"><small>Director</small><strong>M. Mohan Karuna</strong></div>
+        </div>
+      </aside>
+    </div>
+    <footer>© <span id="year"></span> MRICON Solutions Pvt. Ltd. · Equal opportunity recruitment</footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbwFgB0yV__60TpmvbXXyuYOu-wWZGyWDvrUhmLhESzirKuR7TRxWPBbmlhibZ-D9AOasQ/exec";
+    const steps = [...document.querySelectorAll(".form-step")];
+    const form = document.getElementById("applicationForm");
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const toast = document.getElementById("toast");
+    let currentStep = 0;
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("availableFrom").min = new Date().toISOString().split("T")[0];
+
+    function showToast(message, isError = false) {
+      toast.textContent = message;
+      toast.classList.toggle("error-toast", isError);
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 4300);
+    }
+
+    function showStep() {
+      steps.forEach((step, index) => step.classList.toggle("active", index === currentStep));
+      const number = currentStep + 1;
+      document.getElementById("stepLabel").textContent = `Step ${number} of ${steps.length}`;
+      document.getElementById("stepName").textContent = steps[currentStep].dataset.name;
+      document.getElementById("progressBar").style.width = `${(number / steps.length) * 100}%`;
+      document.querySelector(".progress-track").setAttribute("aria-valuenow", number);
+      backBtn.hidden = currentStep === 0;
+      nextBtn.hidden = currentStep === steps.length - 1;
+      submitBtn.hidden = currentStep !== steps.length - 1;
+      document.querySelector(".form-card").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function validateCurrentStep() {
+      const controls = [...steps[currentStep].querySelectorAll("input, select, textarea")];
+      let valid = true;
+      controls.forEach(control => {
+        const controlValid = control.checkValidity();
+        control.classList.toggle("invalid", !controlValid);
+        if (!controlValid) valid = false;
+      });
+      const workModeRequired = steps[currentStep].querySelector('input[name="workMode"][required]');
+      const selectedWorkMode = form.querySelector('input[name="workMode"]:checked');
+      document.getElementById("workModeError").style.display = workModeRequired && !selectedWorkMode ? "block" : "none";
+      if (!valid) {
+        steps[currentStep].querySelector(":invalid")?.focus();
+        showToast("Please complete the highlighted required fields.", true);
+      }
+      return valid;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!validateCurrentStep()) return;
+      currentStep = Math.min(currentStep + 1, steps.length - 1);
+      showStep();
+    });
+    backBtn.addEventListener("click", () => {
+      currentStep = Math.max(0, currentStep - 1);
+      showStep();
+    });
+    form.addEventListener("input", event => {
+      if (event.target.matches("input, select, textarea")) event.target.classList.remove("invalid");
+      if (event.target.name === "workMode") document.getElementById("workModeError").style.display = "none";
+    });
+
+    document.getElementById("mobile").addEventListener("input", event => {
+      event.target.value = event.target.value.replace(/\D/g, "");
+    });
+
+    function watchFile(inputId, statusId, limitMb) {
+      const input = document.getElementById(inputId);
+      const status = document.getElementById(statusId);
+      input.addEventListener("change", () => {
+        const file = input.files[0];
+        input.setCustomValidity("");
+        status.classList.remove("ready");
+        if (!file) { status.textContent = "No file selected"; return; }
+        if (file.size > limitMb * 1024 * 1024) {
+          input.setCustomValidity(`Maximum file size is ${limitMb} MB.`);
+          status.textContent = `File is too large (maximum ${limitMb} MB)`;
+          showToast(`${file.name} is larger than ${limitMb} MB.`, true);
+          return;
+        }
+        status.textContent = `Selected: ${file.name}`;
+        status.classList.add("ready");
+      });
+    }
+    watchFile("resume", "resumeStatus", 5);
+    watchFile("photo", "photoStatus", 2);
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve({ name: file.name, mimeType: file.type, data: reader.result.split(",")[1] });
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!validateCurrentStep()) return;
+      if (!FORM_ENDPOINT) {
+        showToast("The professional form is ready. Google Sheets submission will be connected in the next setup step.", true);
+        return;
+      }
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting…";
+      try {
+        const application = {};
+        new FormData(form).forEach((value, key) => {
+          if (!(value instanceof File)) application[key] = value;
+        });
+        const documents = {};
+        for (const input of form.querySelectorAll('input[type="file"]')) {
+          if (input.files[0]) documents[input.name] = await fileToBase64(input.files[0]);
+        }
+        await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ application, documents })
+        });
+        form.reset();
+        currentStep = 0;
+        showStep();
+        document.querySelectorAll(".file-status").forEach(node => {
+          node.textContent = "No file selected";
+          node.classList.remove("ready");
+        });
+        showToast("Application submitted. Our recruitment team will contact shortlisted candidates.");
+      } catch (error) {
+        showToast("We could not submit your application. Please check your connection or contact MRICON Solutions.", true);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit application";
+      }
+    });
+  </script>
+</body>
+</html>
