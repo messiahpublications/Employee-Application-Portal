@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- MRICON PORTAL UPDATE: FULL-SCREEN THANK-YOU CONFIRMATION — VERSION 3 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -160,6 +161,33 @@
     }
     .toast.show { transform: translate(-50%, 0); opacity: 1; }
     .toast.error-toast { background: #8f1c14; }
+    .success-screen {
+      position: fixed; z-index: 50; inset: 0; display: none; place-items: center;
+      padding: 24px; background: rgba(12, 10, 55, .78); backdrop-filter: blur(8px);
+    }
+    .success-screen.show { display: grid; animation: successFade .22s ease; }
+    .success-panel {
+      width: min(620px, 100%); overflow: hidden; text-align: center; background: #fff;
+      border: 1px solid rgba(255,255,255,.45); border-radius: 24px;
+      box-shadow: 0 28px 80px rgba(5, 4, 32, .38);
+    }
+    .success-banner { height: 9px; background: linear-gradient(90deg, var(--orange), var(--gold), var(--navy)); }
+    .success-content { padding: clamp(30px, 6vw, 52px); }
+    .success-icon {
+      width: 82px; height: 82px; display: grid; place-items: center; margin: 0 auto 22px;
+      color: #fff; background: linear-gradient(145deg, #0a8f57, #087443);
+      border-radius: 50%; box-shadow: 0 14px 30px rgba(8,116,67,.25);
+      font-size: 2.35rem; font-weight: 900;
+    }
+    .success-panel h2 { margin: 0; color: var(--navy); font-size: clamp(1.75rem, 5vw, 2.5rem); line-height: 1.15; }
+    .success-panel p { max-width: 470px; margin: 14px auto 0; color: var(--muted); font-size: 1rem; }
+    .success-note {
+      margin: 24px auto 0; padding: 14px 16px; color: #45405f; background: #f5f4fc;
+      border: 1px solid #e2e0f2; border-radius: 12px; font-size: .9rem;
+    }
+    .success-done { width: min(220px, 100%); margin-top: 26px; }
+    @keyframes successFade { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .success-screen.show { animation: none; } }
     footer { padding: 23px 0 0; text-align: center; color: var(--muted); font-size: .78rem; }
 
     @media (max-width: 880px) {
@@ -424,6 +452,19 @@
     <footer>© <span id="year"></span> MRICON Solutions Pvt. Ltd. · Equal opportunity recruitment</footer>
   </main>
 
+  <div class="success-screen" id="successScreen" role="dialog" aria-modal="true" aria-labelledby="successTitle" aria-describedby="successMessage" hidden>
+    <div class="success-panel">
+      <div class="success-banner"></div>
+      <div class="success-content">
+        <div class="success-icon" aria-hidden="true">&#10003;</div>
+        <h2 id="successTitle">Thank you for your application!</h2>
+        <p id="successMessage">Your application has been submitted to MRICON Solutions Pvt. Ltd. Our recruitment team will review your details and contact you if your profile is shortlisted.</p>
+        <div class="success-note">Please keep your mobile number available for recruitment updates.</div>
+        <button class="btn btn-submit success-done" id="successDone" type="button">Done</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
@@ -434,6 +475,8 @@
     const nextBtn = document.getElementById("nextBtn");
     const submitBtn = document.getElementById("submitBtn");
     const toast = document.getElementById("toast");
+    const successScreen = document.getElementById("successScreen");
+    const successDone = document.getElementById("successDone");
     let currentStep = 0;
 
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -446,6 +489,27 @@
       clearTimeout(showToast.timer);
       showToast.timer = setTimeout(() => toast.classList.remove("show"), 4300);
     }
+
+    function showSuccessScreen() {
+      successScreen.hidden = false;
+      successScreen.style.display = "grid";
+      successScreen.classList.add("show");
+      document.body.style.overflow = "hidden";
+      successDone.focus();
+    }
+
+    function closeSuccessScreen() {
+      successScreen.classList.remove("show");
+      successScreen.style.display = "none";
+      successScreen.hidden = true;
+      document.body.style.overflow = "";
+      document.getElementById("fullName").focus();
+    }
+
+    successDone.addEventListener("click", closeSuccessScreen);
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !successScreen.hidden) closeSuccessScreen();
+    });
 
     function showStep() {
       steps.forEach((step, index) => step.classList.toggle("active", index === currentStep));
@@ -557,7 +621,7 @@
           node.textContent = "No file selected";
           node.classList.remove("ready");
         });
-        showToast("Application submitted. Our recruitment team will contact shortlisted candidates.");
+        showSuccessScreen();
       } catch (error) {
         showToast("We could not submit your application. Please check your connection or contact MRICON Solutions.", true);
       } finally {
